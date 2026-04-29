@@ -1,0 +1,18 @@
+# 特定のファイルを除外
+*検討*.txt
+*メモ*.txt
+*memo*.txt
+*.ODS#
+list*.txt
+*.code*
+CLAUDE.md
+
+# 特定のフォルダ（ディレクトリ）を丸ごと除外
+.claude/
+.crossnote/
+bk/
+log/
+cfg/
+test/
+result/
+script/
