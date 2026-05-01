@@ -159,3 +159,16 @@ gdal_translate -of GTiff -r average ^
 2.temp_stat_hourly.txtで中央値±0.1℃差が105件/37944件<br>
 3.temp_hist_hourly.txtでヒストグラム%で±0.1%以上の差が21件/2124864件（全て±0.2%未満）<br>
 4.4000x4000全て陸地領域の解析では約2.1GBのメモリ節約（全てfloatの場合は約6.9GB）で非常に効果が大きい<br>
+
+## ビルドに関して
+GDAL :
+　　vcpkg install gdal[tools,poppler,netcdf,recommended-features]:x64-windows
+libpng :
+　　vcpkg install libpng:x64-windows-static
+    　 ※ DLL不整合ではまったのでstatic
+BLOSC2 :
+　　vcpkg install blosc2:x64-windows
+NetCDF :
+　　vcpkg install netcdf-c[tools]:x64-windows
+pcre2 :
+　　vcpkg install x64-windows-static

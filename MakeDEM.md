@@ -172,7 +172,7 @@ gdal_translate -of GTiff -r average ^
 250mメッシュ
 ```
 gdal_translate -of GTiff -r average ^
-  -projwin 128.4500 34.000 132.1250 31.000 ^
+  -projwin 128.5430 34.015 132.1250 30.950 ^
   -tr 0.0026731 0.0022533 ^
   -co COMPRESS=LZW ^
   U:\DEM\all_japan.vrt U:\DEM\Kyushu_250m.tif
@@ -180,7 +180,7 @@ gdal_translate -of GTiff -r average ^
 100mメッシュ
 ```
 gdal_translate -of GTiff -r average ^
-  -projwin 129.2500 34.000 132.1250 31.000 ^
+  -projwin 128.5430 34.015 132.1250 30.950 ^
   -tr 0.00106924 0.00090132 ^
   -co COMPRESS=LZW ^
   U:\DEM\all_japan.vrt U:\DEM\Kyushu_100m.tif
@@ -188,7 +188,7 @@ gdal_translate -of GTiff -r average ^
 50mメッシュ
 ```
 gdal_translate -of GTiff -r average ^
-  -projwin 129.2500 34.000 132.1250 31.000 ^
+  -projwin 128.5430 34.015 132.1250 30.950 ^
   -tr 0.00053462 0.00045066 ^
   -co COMPRESS=LZW ^
   U:\DEM\all_japan.vrt U:\DEM\Kyushu_50m.tif
