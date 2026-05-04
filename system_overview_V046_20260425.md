@@ -6,21 +6,26 @@
 ## 1. ファイル構成
 
 | ファイル | 行数 | 役割 |
-|---|---|---|
-| `amt.cpp` | 2,696 | 解析ロジック・実行制御の全体（設定読込・初期化・実行モード） |
-| `AnalAMeDAS.h` | 1,160 | 全構造体・定数・インライン関数の定義 |
-| `AnalAMeDAS.cpp` | 7,052 | 初期化・解放・データ読込・出力関数群 |
-| `Interpolation.cpp` | 2,480 | 補間計算・近傍点テーブル構築・エリア統計集計 |
-| `OpticalFlow.cpp` | 616 | 勾配フロー・Horn-Schunck実装（AVX-512） |
-| `HsCommon.h` | 1,373 | 汎用クラス（CHsString / CHsIniFile / CHsLog） |
-| `WriteGeoTIFF.h` | 600 | GeoTIFF出力（GDAL）|
-| `WriteGRD.h` | 1,493 | 独自バイナリ(GRD)出力・読込、BLOSC2圧縮 |
-| `ConvMatrix.h` | 404 | float/int16変換・カラーマップ適用・PNG行生成 |
-| `TMD.h` | 705 | 汎用時系列データロガー形式の読み書き |
-| `Nifsq8.cpp/.h` | 1,060 | 補助モジュール（データ圧縮補助） |
-| `toml.hpp` | — | TOML設定パーサ（ヘッダオンリー、外部ライブラリ） |
-| `stb_truetype.h` | — | TrueTypeフォントレンダリング（ヘッダオンリー、外部ライブラリ） |
-| `*.cfg` | — | 実行設定ファイル（INI形式） |
+|:---|---:|:---|
+|`amt.cpp`|3910|解析ロジック・実行制御の全体（設定読込・初期化・実行モード）|
+|`AnalAMeDAS.h`|1160|全構造体・定数・インライン関数の定義|
+|`AnalAMeDAS.cpp`|7468|初期化・解放・データ読込・出力関数群|
+|`Interpolation.cpp`|2480|補間計算・近傍点テーブル構築・エリア統計集計|
+|`OpticalFlow.cpp`|616|勾配フロー・Horn-Schunck実装（AVX-512）|
+|`LogStDatNetCDF.h`|406|NetCDF出力クラス定義、観測点計算結果時別データ出力|
+|`HourlyStatNetCDF.h`|406|NetCDF出力クラス定義、時別データ出力|
+|`HsCommon.h`|1373|汎用クラス（CHsString/CHsIniFile/CHsLog）|
+|`WriteGeoTIFF.h`|600|GeoTIFF出力（GDAL）|
+|`WriteGRD.h`|1493|独自バイナリ(GRD)出力・読込、BLOSC2圧縮|
+|`ConvMatrix.h`|404|float/int16変換・カラーマップ適用・PNG行生成|
+|`TMD.h`|705|汎用時系列データロガー形式の読み書き|
+|`Nifsq8.cpp/.h`|1060|補助モジュール（データ圧縮補助）|
+|`palette1.h`|259|8bitPNG用パレット定義|
+|`palette2.h`|259|8bitPNG用パレット定義|
+|`toml.hpp`|—|TOML設定パーサ（ヘッダオンリー、外部ライブラリ）|
+|`stb_truetype.h`|—|TrueTypeフォントレンダリング（ヘッダオンリー、外部ライブラリ）|
+|`*.cfg`|—|実行設定ファイル（INI形式）|
+
 
 ---
 
@@ -415,6 +420,14 @@ Horn-Schunckオプティカルフロー（HS_ALPHA_SQ=0.1, HS_ITER=32）。Sobel
 - `loocv_RMSE`, `loocv_MAE`, `loocv_maxErr`
 - 緯度帯別（南/<33°N、中/33-40°N、北/>40°N）集計
 - ラプラシアン（空間的滑らかさ指標）も計算
+
+|指標|正式名称|概要|
+|---|---|---|
+|RMSE|Root Mean Squared Error（二乗平均平方根誤差）|誤差を二乗して平均し、その平方根をとったもの。大きな誤差に敏感（ペナルティが大きい）。|
+|MAE|Mean Absolute Error（平均絶対誤差）誤差の絶対値の平均。|外れ値の影響を受けにくく、直感的に理解しやすい。|
+|BIAS|Bias（バイアス）|予測値と実測値の差の平均。モデルが全体として過大評価（＋）か過小評価（－）かを示す。|
+|NSE|Nash-Sutcliffe Efficiency（ナッシュ・サトクリフ効率係数）|主に水文学で使用される。1に近いほど精度が高く、0以下は「平均値を使うより精度が低い」ことを意味する。|
+|R|Correlation Coefficient（相関係数）|予測値と実測値の連動性（相関）の強さを示す。通常、1に近いほど正の相関が強い。|
 
 #### `EvalDivergRain()`
 観測点位置の発散値と降水量を照合。
